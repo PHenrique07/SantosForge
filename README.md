@@ -16,7 +16,7 @@
 </p>
 
 > [!WARNING]
-> **Active Development:** This project is currently in active development. Features, model mappings, and configuration schemas may evolve rapidly.
+> **Active Development & Personal Use:** This project is currently in active development and was created strictly for personal experimentation and sharing among friends and collaborators. It is not an official commercial product, nor is it affiliated with or endorsed by GitHub, Microsoft, or any model provider.
 
 ---
 
@@ -132,6 +132,14 @@ Press **F5** in VS Code to launch an Extension Development Host window for live 
 This project is built on top of and specifically designed to interface with:
 
 * **[FreeLLMAPI](https://github.com/tashfeenahmed/freellmapi)** by **Tashfeen Ahmed**: the open-source router aggregating free-tier AI inference across 34+ providers behind a unified OpenAI-compatible endpoint.
+
+---
+
+## ⚠️ Disclaimer
+
+* **Intended Use:** This extension is a personal project developed for educational experimentation and shared among friends and collaborators.
+* **Independent Tool:** It is completely independent and has no official affiliation with Microsoft, GitHub Copilot, or any of the upstream model providers.
+* **Terms of Service:** Users are solely responsible for ensuring their personal API usage adheres to the terms of service, rate limits, and acceptable use policies of their respective providers (Groq, Cerebras, OpenRouter, NVIDIA NIM, etc.).
 
 ---
 
