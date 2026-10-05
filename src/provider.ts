@@ -13,12 +13,12 @@ import type {
 } from './types';
 import { UsageTracker } from './usage';
 
-/** Roteadores virtuais do FreeLLMAPI que sempre aparecem no topo do seletor. */
+/** Roteadores virtuais do FreeLLMAPI exibidos com nomes amigáveis no topo. */
 const ROUTER_MODELS: Array<{ id: string; name: string; detail: string }> = [
-  { id: 'auto', name: 'Auto (cadeia ativa)', detail: 'FreeLLMAPI escolhe o melhor modelo' },
-  { id: 'auto:smart', name: 'Auto · Smart', detail: 'Prioriza os modelos mais inteligentes' },
-  { id: 'auto:fast', name: 'Auto · Fast', detail: 'Prioriza velocidade' },
-  { id: 'auto:reliable', name: 'Auto · Reliable', detail: 'Prioriza taxa de sucesso' },
+  { id: 'auto', name: 'Auto (Recomendado · Melhor Escolha)', detail: 'Escolhe o melhor modelo disponível com cota' },
+  { id: 'auto:smart', name: 'Auto (Mais Inteligente)', detail: 'Prioriza modelos com maior capacidade de raciocínio' },
+  { id: 'auto:fast', name: 'Auto (Mais Rápido)', detail: 'Prioriza menor latência e maior velocidade de resposta' },
+  { id: 'auto:reliable', name: 'Auto (Mais Confiável)', detail: 'Prioriza provedores com menor taxa de falhas' },
 ];
 
 /** Estimativa simples: ~4 caracteres por token. */
@@ -118,13 +118,32 @@ export class ChatModelProvider implements vscode.LanguageModelChatProvider {
     const provider = (m.platform as string) ?? (m.provider as string) ?? m.owned_by;
     const caps = Array.isArray(m.capabilities) ? m.capabilities.map(String) : Object.keys(m.capabilities ?? {});
     const vision = Boolean(m.vision ?? m.supports_vision ?? caps.some((c) => /vision|image/i.test(c)));
+
+    let displayName = m.display_name ?? m.name ?? m.id;
+    let detail = provider ? `${provider} · ${fmtCtx(ctx)}` : fmtCtx(ctx);
+
+    // Embeleza nomes de slots virtuais conhecidos do FreeLLMAPI
+    if (m.id === 'fusion') {
+      displayName = 'Fusão (Painel de Modelos em Paralelo)';
+      detail = 'Combina múltiplos modelos para criar uma resposta sintetizada';
+    } else if (m.id === 'auto:sonnet' || m.id.includes('sonnet')) {
+      displayName = 'Slot Claude Sonnet (Equivalente Free)';
+      detail = 'Roteia para o melhor modelo gratuito balanceado para código';
+    } else if (m.id === 'auto:opus' || m.id.includes('opus')) {
+      displayName = 'Slot Claude Opus (Equivalente Free)';
+      detail = 'Roteia para o melhor modelo gratuito de raciocínio profundo';
+    } else if (m.id === 'auto:haiku' || m.id.includes('haiku')) {
+      displayName = 'Slot Claude Haiku (Equivalente Free)';
+      detail = 'Roteia para modelo leve e ultra-rápido';
+    }
+
     return {
       id: m.id,
-      name: m.display_name ?? m.name ?? m.id,
+      name: displayName,
       family: family ?? (m.id.split(/[/:]/).pop() ?? m.id),
       version: '1',
-      detail: provider ? `${provider} · ${fmtCtx(ctx)}` : fmtCtx(ctx),
-      tooltip: `${m.id}\nContexto: ${ctx.toLocaleString('pt-BR')} tokens${m.execution_status ? `\nStatus: ${m.execution_status}` : ''}`,
+      detail,
+      tooltip: `${m.id}\nContexto: ${ctx.toLocaleString('pt-BR')} tokens${provider ? `\nProvedor: ${provider}` : ''}${m.execution_status ? `\nStatus: ${m.execution_status}` : ''}`,
       maxInputTokens: Math.max(1024, ctx - maxOut),
       maxOutputTokens: maxOut,
       capabilities: {

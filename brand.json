@@ -1,6 +1,7 @@
 {
   "id": "santosforge",
   "displayName": "SantosForge",
+  "version": "0.0.2",
   "publisher": "santos",
   "description": "Use os modelos gratuitos do FreeLLMAPI direto no seletor de modelos do GitHub Copilot Chat.",
   "icon": "assets/icon.png",

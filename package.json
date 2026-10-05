@@ -2,7 +2,7 @@
   "name": "santosforge",
   "displayName": "SantosForge",
   "description": "Use os modelos gratuitos do FreeLLMAPI direto no seletor de modelos do GitHub Copilot Chat.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "santos",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {

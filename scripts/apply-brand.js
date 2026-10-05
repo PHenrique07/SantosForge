@@ -28,6 +28,7 @@ const before = JSON.stringify(pkg);
 
 pkg.name = id;
 pkg.displayName = name;
+if (brand.version) pkg.version = brand.version;
 if (brand.publisher) pkg.publisher = brand.publisher;
 if (brand.description) pkg.description = brand.description;
 if (brand.icon) pkg.icon = brand.icon;
