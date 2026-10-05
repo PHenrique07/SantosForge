@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PHenrique07/SantosForge/main/assets/icon.png" width="128" height="128" alt="SantosForge Logo" />
+  <img src="https://raw.githubusercontent.com/PHenrique07/SantosForge/main/assets/icon.png" width="220" style="max-width: 100%; height: auto;" alt="SantosForge Logo" />
 </p>
 
 <h1 align="center">SantosForge</h1>
