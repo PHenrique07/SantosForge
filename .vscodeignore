@@ -1,0 +1,10 @@
+.vscode/**
+src/**
+scripts/**
+node_modules/**
+out/**/*.map
+tsconfig.json
+brand.json
+plano_projeto_santosllm.md
+.gitignore
+*.vsix

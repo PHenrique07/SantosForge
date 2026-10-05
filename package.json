@@ -1,0 +1,131 @@
+{
+  "name": "santosforge",
+  "displayName": "SantosForge",
+  "description": "Use os modelos gratuitos do FreeLLMAPI direto no seletor de modelos do GitHub Copilot Chat.",
+  "version": "0.0.1",
+  "publisher": "santos",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "vscode": "^1.104.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "keywords": [
+    "copilot",
+    "llm",
+    "freellmapi",
+    "openai",
+    "language model"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languageModelChatProviders": [
+      {
+        "vendor": "santosforge",
+        "displayName": "SantosForge",
+        "managementCommand": "santosforge.manage"
+      }
+    ],
+    "commands": [
+      {
+        "command": "santosforge.setToken",
+        "title": "Definir token do FreeLLMAPI",
+        "category": "SantosForge"
+      },
+      {
+        "command": "santosforge.clearToken",
+        "title": "Remover token salvo",
+        "category": "SantosForge"
+      },
+      {
+        "command": "santosforge.manage",
+        "title": "Gerenciar",
+        "category": "SantosForge"
+      },
+      {
+        "command": "santosforge.testConnection",
+        "title": "Testar conexão",
+        "category": "SantosForge"
+      },
+      {
+        "command": "santosforge.refreshModels",
+        "title": "Recarregar lista de modelos",
+        "category": "SantosForge"
+      },
+      {
+        "command": "santosforge.showUsage",
+        "title": "Ver uso de tokens",
+        "category": "SantosForge"
+      },
+      {
+        "command": "santosforge.resetUsage",
+        "title": "Zerar contador de tokens",
+        "category": "SantosForge"
+      }
+    ],
+    "configuration": {
+      "title": "SantosForge",
+      "properties": {
+        "santosforge.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:3001/v1",
+          "markdownDescription": "URL base do FreeLLMAPI (compatível com OpenAI). Padrão: `http://localhost:3001/v1`."
+        },
+        "santosforge.onlyReadyModels": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Listar apenas modelos que podem responder agora (`execution_status=ready`)."
+        },
+        "santosforge.maxModels": {
+          "type": "number",
+          "default": 60,
+          "minimum": 1,
+          "description": "Número máximo de modelos exibidos no seletor do Copilot (além dos roteadores auto)."
+        },
+        "santosforge.defaultContextWindow": {
+          "type": "number",
+          "default": 128000,
+          "description": "Janela de contexto usada quando o FreeLLMAPI não informa o tamanho do modelo."
+        },
+        "santosforge.defaultMaxOutputTokens": {
+          "type": "number",
+          "default": 8192,
+          "description": "Máximo de tokens de saída informado ao Copilot."
+        },
+        "santosforge.enableToolCalling": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Anunciar suporte a *tool calling* (necessário para o modo Agente do Copilot)."
+        },
+        "santosforge.showModelInResponse": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Adicionar no final de cada resposta uma linha com o modelo real usado e os tokens gastos."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "brand": "node scripts/apply-brand.js",
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm run brand && tsc -p ./",
+    "watch": "npm run brand && tsc -watch -p ./",
+    "package": "vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.104.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.6.0"
+  },
+  "icon": "assets/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PHenrique07/SantosForge.git"
+  }
+}
